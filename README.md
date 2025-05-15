@@ -23,6 +23,7 @@
 ## 🗂 Directory Structure
 
 **food_delivery/**
+```
 - ├── **frontend**/ # User interface
 │ ├── src/
 │ │ ├── Assets/ # Static assets (images, fonts, media)
@@ -43,7 +44,7 @@
 │ ├── models/ # Mongoose models
 │ ├── controllers/ # Logic for handling requests
 │ ├── upload/ # Uploaded images/files
-
+```
 **🚀 Getting Started**
 
 - **Step 1:** Clone the Repository
