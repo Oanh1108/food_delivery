@@ -24,7 +24,7 @@
 
 **food_delivery/**
 ```
-- ├── **frontend**/ # User interface
+├── **frontend**/ # User interface
 │ ├── src/
 │ │ ├── Assets/ # Static assets (images, fonts, media)
 │ │ ├── Components/ # Reusable components
@@ -32,14 +32,14 @@
 │ │ ├── Context/ # State management via Context API
 │ ├── public/ # Static files (index.html, favicon, etc.)
 
-- ├── **admin**/ # Admin dashboard
+├── **admin**/ # Admin dashboard
 │ ├── src/
 │ │ ├── Assets/ # Static assets (images, fonts, media)
 │ │ ├── Components/ # Admin reusable components
 │ │ ├── Pages/ # Admin pages
 │ ├── public/ # Admin static assets
 
-- ├── **backend**/ # Server, API, database
+├── **backend**/ # Server, API, database
 │ ├── routes/ # API route definitions
 │ ├── models/ # Mongoose models
 │ ├── controllers/ # Logic for handling requests
