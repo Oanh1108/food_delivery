@@ -22,31 +22,27 @@
 
 ## 🗂 Directory Structure
 
-food_delivery/
-├── frontend/ # User interface
-├── admin/ # Admin dashboard
-├── backend/ # Server, API, database
+**food_delivery/**
+├── **frontend**/ # User interface
+│ ├── src/
+│ │ ├── Assets/ # Static assets (images, fonts, media)
+│ │ ├── Components/ # Reusable components
+│ │ ├── Pages/ # Main pages
+│ │ ├── Context/ # State management via Context API
+│ ├── public/ # Static files (index.html, favicon, etc.)
 
-**Frontend (React)**
-├── src/
-|   ├── Assets/        # Static assets (images, fonts, media)
-│   ├── Components/    # Reusable components
-│   ├── Pages/         # Main pages
-│   ├── Context/       # State management via Context API
-├── public/            # Static files (index.html, favicon, etc.)
+├── **admin**/ # Admin dashboard
+│ ├── src/
+│ │ ├── Assets/ # Static assets (images, fonts, media)
+│ │ ├── Components/ # Admin reusable components
+│ │ ├── Pages/ # Admin pages
+│ ├── public/ # Admin static assets
 
-**Admin Panel (React + Vite)**
-├── src/
-|   ├── Assets/        # Static assets (images, fonts, media)
-│   ├── Components/    # Admin reusable components
-│   ├── Pages/         # Admin pages
-├── public/            # Admin static assets
-
-**Backend (Node.js + Express)**
-├── routes/            # API route definitions
-├── models/            # Mongoose models
-├── controllers/       # Logic for handling requests
-├── upload/            # Uploaded images/files
+├── **backend**/ # Server, API, database
+│ ├── routes/ # API route definitions
+│ ├── models/ # Mongoose models
+│ ├── controllers/ # Logic for handling requests
+│ ├── upload/ # Uploaded images/files
 
 **🚀 Getting Started**
 
