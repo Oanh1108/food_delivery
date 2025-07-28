@@ -23,7 +23,7 @@
 ## 🗂 Directory Structure
 
 **food_delivery/**
-```
+food_del/
 ├── frontend/ # User interface
 │ ├── src/
 │ │ ├── Assets/ # Static assets (images, fonts, media)
@@ -87,6 +87,7 @@ npm start  # or: node index.js
 - User and admin authentication
 - Product management
 - Order tracking
+- View order history
 
 **📌 Features to Develop Next**
 - Discount and coupon system
