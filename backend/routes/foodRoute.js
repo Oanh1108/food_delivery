@@ -8,7 +8,7 @@ const foodRouter = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({storage:storage})
 
-foodRouter.post("/add", upload.single("image"),addFood)
+foodRouter.post("/add", upload.array("images", 10),addFood)
 foodRouter.get("/list",listFood)
 foodRouter.post("/remove",removeFood)
 
