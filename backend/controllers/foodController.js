@@ -1,27 +1,38 @@
 import foodModel from "../models/foodModel.js";
-import fs from 'fs';
-import path from 'path';
+import cloudinary from "../config/cloudinary.js";
 
 // Add food item
 const addFood = async (req, res) => {
   try {
-    // Lấy tên tệp ảnh từ req.file.filename
-    const image_filename = req.file.filename;
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No image uploaded" });
+    }
+
+    // Upload image to Cloudinary from buffer
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: 'food-delivery' },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      uploadStream.end(req.file.buffer);
+    });
 
     const food = new foodModel({
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
       category: req.body.category,
-      image: image_filename
+      image: uploadResult.secure_url
     });
 
-    // Lưu món ăn vào cơ sở dữ liệu
     await food.save();
     res.json({ success: true, message: "Food Added" });
 
   } catch (error) {
-    console.log("Error in addFood:", error); // In lỗi chi tiết
+    console.log("Error in addFood:", error);
     res.status(500).json({ success: false, message: error.message || "Error" });
   }
 };
@@ -40,34 +51,29 @@ const listFood = async (req, res) => {
 // Remove food item
 const removeFood = async (req, res) => {
   try {
-    // Tìm món ăn trong cơ sở dữ liệu theo ID
     const food = await foodModel.findById(req.body.id);
     if (!food) {
       console.log("Food not found with ID:", req.body.id);
       return res.status(404).json({ success: false, message: "Food not found" });
     }
 
-    // Log thông tin món ăn
-    console.log("Found food:", food);
-
-    // Đảm bảo đường dẫn tệp ảnh chính xác
-    const imagePath = path.join('uploads', food.image);
-    console.log("Image path:", imagePath);
-
-    // Xóa ảnh khỏi thư mục uploads nếu tồn tại
-    if (fs.existsSync(imagePath)) {
-      // Xóa ảnh từ thư mục uploads
-      await fs.promises.unlink(imagePath);
-      console.log(`Deleted image: ${imagePath}`);
-    } else {
-      console.log(`Image not found at path: ${imagePath}`);
+    // Delete image from Cloudinary if it exists
+    if (food.image) {
+      try {
+        // Extract public_id from Cloudinary URL
+        const urlParts = food.image.split('/');
+        const publicIdWithExt = urlParts[urlParts.length - 1];
+        const publicId = `food-delivery/${publicIdWithExt.split('.')[0]}`;
+        await cloudinary.uploader.destroy(publicId);
+        console.log(`Deleted image from Cloudinary: ${publicId}`);
+      } catch (imgError) {
+        console.log("Error deleting image from Cloudinary:", imgError);
+      }
     }
 
-    // Xóa món ăn khỏi cơ sở dữ liệu
     await foodModel.findByIdAndDelete(req.body.id);
     console.log(`Food with ID ${req.body.id} deleted`);
 
-    // Trả về phản hồi thành công
     res.json({ success: true, message: "Food Removed" });
   } catch (error) {
     console.log("Error in removeFood:", error);

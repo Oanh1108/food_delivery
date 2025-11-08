@@ -4,15 +4,8 @@ import multer from "multer"
 
 const foodRouter = express.Router();
 
-// Image Storage Engine
-
-const storage = multer.diskStorage({
-    destination:"uploads",
-    filename:(req,file,cb)=>{
-        return cb(null,`${file.originalname}`)
-    }
-})
-
+// Use memory storage for Vercel (serverless)
+const storage = multer.memoryStorage();
 const upload = multer({storage:storage})
 
 foodRouter.post("/add", upload.single("image"),addFood)
